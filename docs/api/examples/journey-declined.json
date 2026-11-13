@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/journeys",
+    "body": {
+      "question": "What is dark energy?",
+      "context": {},
+      "audience": "beginner"
+    }
+  },
+  "status": 422,
+  "response": {
+    "apiVersion": "1.0",
+    "error": {
+      "code": "unsupported_in_demo",
+      "message": "Dynamic journey generation is not available in demo mode. This demo can only open its prepared journey.",
+      "details": {
+        "suggestions": [
+          "Why does this source appear to move?",
+          "Could this be Planet Nine?",
+          "What is a difference image?"
+        ]
+      }
+    }
+  }
+}

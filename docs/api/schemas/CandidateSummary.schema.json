@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/CandidateSummary.schema.json",
+  "title": "CandidateSummary",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "designation": {
+      "type": "string",
+      "description": "Internal label, e.g. \"SSX-A-001\". Not an official designation."
+    },
+    "regionId": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "moving-source",
+        "brightness-change",
+        "single-epoch-detection"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unclassified",
+        "needs-follow-up",
+        "known-object-match",
+        "likely-variable-source",
+        "likely-artifact"
+      ],
+      "description": "Review state. There is deliberately no \"confirmed planet\" value."
+    },
+    "headline": {
+      "type": "string"
+    },
+    "position": {
+      "type": "object",
+      "properties": {
+        "raDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "Right ascension, decimal degrees"
+        },
+        "decDeg": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Declination, decimal degrees"
+        },
+        "frame": {
+          "default": "ICRS",
+          "type": "string",
+          "const": "ICRS"
+        }
+      },
+      "required": [
+        "raDeg",
+        "decDeg",
+        "frame"
+      ],
+      "additionalProperties": false,
+      "description": "Position at first detection"
+    },
+    "detectionCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "firstObservedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "lastObservedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "real-observation",
+        "simulated",
+        "model-derived",
+        "artist-impression",
+        "illustrative-diagram",
+        "procedural-visualization"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "designation",
+    "regionId",
+    "kind",
+    "status",
+    "headline",
+    "position",
+    "detectionCount",
+    "firstObservedAt",
+    "lastObservedAt",
+    "classification"
+  ],
+  "additionalProperties": false
+}

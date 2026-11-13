@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/EvidenceItem.schema.json",
+  "title": "EvidenceItem",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "image",
+        "difference-image",
+        "measurement",
+        "spectrum",
+        "catalog-crossmatch",
+        "literature"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "epistemicStatus": {
+      "type": "string",
+      "enum": [
+        "established",
+        "observed",
+        "model-derived",
+        "hypothesis",
+        "illustrative",
+        "simulated"
+      ],
+      "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+    },
+    "observationIds": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "comparisonId": {
+      "type": "string"
+    },
+    "datasetId": {
+      "type": "string"
+    },
+    "values": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "measurement": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "uncertainty": {
+                "description": "1-sigma, same unit as value",
+                "type": "number",
+                "minimum": 0
+              },
+              "unit": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "unit"
+            ],
+            "additionalProperties": false,
+            "description": "A number with its unit and, where known, 1-sigma uncertainty."
+          }
+        },
+        "required": [
+          "label",
+          "measurement"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sourceIds": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "summary",
+    "epistemicStatus",
+    "observationIds",
+    "values",
+    "sourceIds"
+  ],
+  "additionalProperties": false,
+  "description": "One inspectable piece of evidence behind a claim or candidate."
+}

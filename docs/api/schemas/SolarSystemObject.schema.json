@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/SolarSystemObject.schema.json",
+  "title": "SolarSystemObject",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "star",
+        "planet",
+        "dwarf-planet",
+        "moon",
+        "belt",
+        "spacecraft",
+        "region"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "hypothetical"
+      ]
+    },
+    "epistemicStatus": {
+      "type": "string",
+      "enum": [
+        "established",
+        "observed",
+        "model-derived",
+        "hypothesis",
+        "illustrative",
+        "simulated"
+      ],
+      "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Plain-language explanation (beginner mode)"
+    },
+    "detail": {
+      "type": "string",
+      "description": "Additional context (research mode)"
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "epistemicStatus": {
+            "type": "string",
+            "enum": [
+              "established",
+              "observed",
+              "model-derived",
+              "hypothesis",
+              "illustrative",
+              "simulated"
+            ],
+            "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+          },
+          "sourceIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "label",
+          "value",
+          "epistemicStatus",
+          "sourceIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "orbit": {
+      "type": "object",
+      "properties": {
+        "semiMajorAxisAu": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "eccentricity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.999
+        },
+        "inclinationDeg": {
+          "type": "number"
+        },
+        "periodYears": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "approximate": {
+          "type": "boolean",
+          "description": "true when values are rounded for visualisation"
+        }
+      },
+      "required": [
+        "semiMajorAxisAu",
+        "eccentricity",
+        "inclinationDeg",
+        "periodYears",
+        "approximate"
+      ],
+      "additionalProperties": false,
+      "description": "Heliocentric orbit of a CONFIRMED body. Must be omitted for hypothetical objects."
+    },
+    "parentId": {
+      "description": "Body this object orbits or accompanies",
+      "type": "string"
+    },
+    "meanRadiusKm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "visual": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "sun",
+            "rocky",
+            "gas-giant",
+            "ice-giant",
+            "icy-body",
+            "belt",
+            "spacecraft",
+            "search-region"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "accentColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "rings": {
+          "default": false,
+          "type": "boolean"
+        },
+        "disclaimer": {
+          "type": "string",
+          "description": "What is exaggerated or illustrative in the 3D depiction"
+        }
+      },
+      "required": [
+        "style",
+        "color",
+        "rings",
+        "disclaimer"
+      ],
+      "additionalProperties": false
+    },
+    "links": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "timeExplorerRegionId": {
+          "type": "string"
+        },
+        "journeyId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sourceIds": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "kind",
+    "status",
+    "epistemicStatus",
+    "tagline",
+    "summary",
+    "detail",
+    "facts",
+    "visual",
+    "links",
+    "sourceIds"
+  ],
+  "additionalProperties": false,
+  "description": "A body, spacecraft or region shown in the 3D explorer."
+}

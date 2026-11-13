@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Band.schema.json",
+  "title": "Band",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "IRSA energy_bandpassname, e.g. \"SPHEREx-D2\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "wavelengthMinUm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "wavelengthMaxUm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "resolvingPower": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "wavelengthMinUm",
+    "wavelengthMaxUm"
+  ],
+  "additionalProperties": false,
+  "description": "A SPHEREx detector band (six detectors cover 0.75–5.0 µm)."
+}

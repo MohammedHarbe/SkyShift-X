@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/comparisons",
+    "body": {
+      "referenceObservationId": "obs-field-a-d2-e2",
+      "targetObservationId": "obs-field-a-d2-e1"
+    }
+  },
+  "status": 422,
+  "response": {
+    "apiVersion": "1.0",
+    "error": {
+      "code": "unsupported_in_demo",
+      "message": "The demo only holds comparisons where the reference is the earlier observation. Swap the two selections."
+    }
+  }
+}

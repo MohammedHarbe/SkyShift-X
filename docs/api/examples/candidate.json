@@ -1,0 +1,336 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/candidates/cand-a-001"
+  },
+  "status": 200,
+  "response": {
+    "apiVersion": "1.0",
+    "data": {
+      "id": "cand-a-001",
+      "designation": "SSX-A-001",
+      "regionId": "field-a",
+      "kind": "moving-source",
+      "status": "needs-follow-up",
+      "headline": "A faint source that shifts position between every epoch",
+      "position": {
+        "raDeg": 52.529188,
+        "decDeg": 18.176406,
+        "frame": "ICRS"
+      },
+      "detectionCount": 6,
+      "firstObservedAt": "2025-05-18T07:42:10Z",
+      "lastObservedAt": "2025-12-03T03:28:31Z",
+      "classification": "simulated",
+      "detections": [
+        {
+          "observationId": "obs-field-a-d2-e1",
+          "observedAt": "2025-05-18T07:42:10Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.529188,
+            "decDeg": 18.176406,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 1242,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 1.32,
+          "snr": 20,
+          "flags": []
+        },
+        {
+          "observationId": "obs-field-a-d4-e1",
+          "observedAt": "2025-05-18T07:42:10Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.529188,
+            "decDeg": 18.176406,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 779,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 3.05,
+          "snr": 12.6,
+          "flags": []
+        },
+        {
+          "observationId": "obs-field-a-d2-e2",
+          "observedAt": "2025-05-27T19:15:44Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.514866,
+            "decDeg": 18.182089,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 1292,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 1.35,
+          "snr": 20.8,
+          "flags": []
+        },
+        {
+          "observationId": "obs-field-a-d4-e2",
+          "observedAt": "2025-05-27T19:15:44Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.514866,
+            "decDeg": 18.182089,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 854,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 3.11,
+          "snr": 13.8,
+          "flags": []
+        },
+        {
+          "observationId": "obs-field-a-d2-e3",
+          "observedAt": "2025-12-03T03:28:31Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.43129,
+            "decDeg": 18.237544,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 1294,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 1.29,
+          "snr": 20.9,
+          "flags": []
+        },
+        {
+          "observationId": "obs-field-a-d4-e3",
+          "observedAt": "2025-12-03T03:28:31Z",
+          "detected": true,
+          "position": {
+            "raDeg": 52.43129,
+            "decDeg": 18.237544,
+            "frame": "ICRS"
+          },
+          "positionUncertaintyArcsec": 1.4,
+          "flux": {
+            "value": 708,
+            "uncertainty": 62,
+            "unit": "uJy"
+          },
+          "wavelengthUm": 2.98,
+          "snr": 11.4,
+          "flags": []
+        }
+      ],
+      "motion": {
+        "angularSeparation": {
+          "value": 53.1,
+          "uncertainty": 2,
+          "unit": "arcsec"
+        },
+        "baselineDays": 9.48,
+        "rate": {
+          "value": 0.233,
+          "uncertainty": 0.009,
+          "unit": "arcsec/hour"
+        },
+        "positionAngleDeg": 292.7,
+        "method": "Simulated centroid difference between Epoch 1 and Epoch 2 in the aligned frame"
+      },
+      "explanations": [
+        {
+          "id": "exp-known",
+          "label": "A known asteroid or comet",
+          "description": "Most moving points in survey images are already-catalogued small bodies.",
+          "assessment": "not-ruled-out",
+          "rationale": "No counterpart was found in the simulated catalogue of known objects. Real catalogues are incomplete for faint bodies, and a main-belt asteroid near a turning point of its apparent path can also move this slowly for a few days.",
+          "evidenceIds": [
+            "ev-a-001-xmatch",
+            "ev-a-001-motion"
+          ]
+        },
+        {
+          "id": "exp-distant",
+          "label": "A distant icy body beyond Neptune",
+          "description": "Trans-Neptunian objects drift slowly because they are far away.",
+          "assessment": "consistent",
+          "rationale": "The measured drift of about 0.23 arcseconds per hour is slow, as expected for a distant body. Being consistent is not the same as being identified: no orbit can be fitted from three positions.",
+          "evidenceIds": [
+            "ev-a-001-motion",
+            "ev-a-001-spectrum"
+          ]
+        },
+        {
+          "id": "exp-planet",
+          "label": "An undiscovered planet",
+          "description": "For example the hypothesised, unconfirmed \"Planet Nine\".",
+          "assessment": "not-ruled-out",
+          "rationale": "Nothing in this evidence singles out a planet over any other slow-moving body. Establishing a new solar-system object needs many positions over months to years, an orbit, and independent confirmation.",
+          "evidenceIds": []
+        },
+        {
+          "id": "exp-artifact",
+          "label": "An image artifact or noise",
+          "description": "Cosmic-ray hits, hot pixels and ghosts can look like sources.",
+          "assessment": "disfavoured",
+          "rationale": "The source is detected in two wavelength bands at all three epochs with similar brightness. Artifacts rarely repeat that way.",
+          "evidenceIds": [
+            "ev-a-001-multiband"
+          ]
+        },
+        {
+          "id": "exp-variable",
+          "label": "A variable star or galaxy",
+          "description": "A fixed source whose brightness changes.",
+          "assessment": "disfavoured",
+          "rationale": "A variable source stays in the same place. This one changes position, leaving a paired dark-and-bright signature in the difference image.",
+          "evidenceIds": [
+            "ev-a-001-diff"
+          ]
+        },
+        {
+          "id": "exp-alignment",
+          "label": "Image misalignment",
+          "description": "If two images are not registered correctly, every star appears to shift.",
+          "assessment": "disfavoured",
+          "rationale": "Neighbouring stars subtract cleanly. The alignment residual is about 0.06 pixels, while this source moved 8.6 pixels.",
+          "evidenceIds": [
+            "ev-a-001-diff"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "ev-a-001-diff",
+          "kind": "difference-image",
+          "title": "Paired residual in the difference image",
+          "summary": "Epoch 2 minus Epoch 1 shows a negative (blue) residual at the earlier position and a positive (amber) residual 53 arcseconds away.",
+          "epistemicStatus": "simulated",
+          "observationIds": [
+            "obs-field-a-d2-e1",
+            "obs-field-a-d2-e2"
+          ],
+          "comparisonId": "cmp-field-a-d2-e1-e2",
+          "values": [],
+          "sourceIds": []
+        },
+        {
+          "id": "ev-a-001-motion",
+          "kind": "measurement",
+          "title": "Apparent motion between Epoch 1 and Epoch 2",
+          "summary": "Positions measured by the (simulated) backend in the aligned frame.",
+          "epistemicStatus": "simulated",
+          "observationIds": [
+            "obs-field-a-d2-e1",
+            "obs-field-a-d2-e2"
+          ],
+          "values": [
+            {
+              "label": "Angular separation",
+              "measurement": {
+                "value": 53.1,
+                "uncertainty": 2,
+                "unit": "arcsec"
+              }
+            },
+            {
+              "label": "Time baseline",
+              "measurement": {
+                "value": 9.48,
+                "unit": "days"
+              }
+            },
+            {
+              "label": "Apparent rate",
+              "measurement": {
+                "value": 0.233,
+                "uncertainty": 0.009,
+                "unit": "arcsec/hour"
+              }
+            }
+          ],
+          "sourceIds": []
+        },
+        {
+          "id": "ev-a-001-multiband",
+          "kind": "measurement",
+          "title": "Detected in two bands at every epoch",
+          "summary": "Six independent detections (Band 2 and Band 4, three epochs) at signal-to-noise above 10.",
+          "epistemicStatus": "simulated",
+          "observationIds": [],
+          "values": [],
+          "sourceIds": []
+        },
+        {
+          "id": "ev-a-001-xmatch",
+          "kind": "catalog-crossmatch",
+          "title": "No match in the known-object catalogue",
+          "summary": "A simulated cross-match against known solar-system objects returned nothing within 30 arcseconds at any epoch. The real backend will query actual catalogues.",
+          "epistemicStatus": "simulated",
+          "observationIds": [],
+          "values": [],
+          "sourceIds": []
+        },
+        {
+          "id": "ev-a-001-spectrum",
+          "kind": "spectrum",
+          "title": "Spectrum resembling sunlight reflected from an icy surface",
+          "summary": "The simulated spectrum follows a Sun-like continuum with injected absorption near 1.5, 2.0 and 3.0 µm.",
+          "epistemicStatus": "simulated",
+          "observationIds": [],
+          "datasetId": "ds-spec-a-001",
+          "values": [],
+          "sourceIds": []
+        }
+      ],
+      "spectrumDatasetId": "ds-spec-a-001",
+      "followUp": [
+        "More positions over weeks to months, to fit an orbit and estimate distance.",
+        "A cross-match against catalogues of known solar-system objects at each observation time.",
+        "A search along the predicted track in other SPHEREx exposures (IRSA provides a Moving Object Search Tool for known orbits).",
+        "Independent confirmation with a different telescope."
+      ],
+      "limitations": [
+        "This candidate is simulated. It exists to demonstrate the workflow and is not evidence of any real object.",
+        "Three positions cannot constrain an orbit.",
+        "Each exposure samples a different wavelength, so brightness differences between epochs mix colour and time variation."
+      ],
+      "relatedJourneyIds": [
+        "journey-moving-source"
+      ],
+      "provenance": {
+        "classification": "simulated",
+        "origin": "Injected into the simulated images by the SkyShift X simulator.",
+        "pipeline": "skyshift-sim 0.1.0",
+        "processingVersion": "sim-v0",
+        "sourceIds": [
+          "src-irsa-cutouts",
+          "src-irsa-sdt"
+        ],
+        "notes": "Synthetic test data that mimics the structure of SPHEREx products. Not a NASA measurement."
+      }
+    },
+    "meta": {
+      "dataOrigin": "mock",
+      "simulated": true,
+      "generatedAt": "2026-11-13T00:00:00.000Z",
+      "notice": "Demo mode: responses come from the in-app mock API. SIMULATED DATA. Generated by scripts/generate-mock-data.mjs. Not real SPHEREx observations."
+    }
+  }
+}

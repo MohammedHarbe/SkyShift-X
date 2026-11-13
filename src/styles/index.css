@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+/* SkyShift X design tokens. Deep-space neutrals, one restrained cyan accent, amber reserved for
+   "simulated / caution" so that label always reads the same way. */
+@theme {
+  --color-void: #02040a;
+  --color-ink: #060b16;
+  --color-navy: #0b1526;
+  --color-slate: #13213a;
+  --color-line: rgb(150 200 240 / 0.14);
+  --color-line-strong: rgb(150 200 240 / 0.28);
+  --color-ice: #e8f4ff;
+  --color-mist: #a3b8cf;
+  --color-dim: #7488a0;
+  --color-cyan: #7fe3ff;
+  --color-cyan-deep: #2bb8e6;
+  --color-amber: #ffb648;
+  --color-rose: #ff8a94;
+  --color-mint: #86efc4;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  --ease-cinematic: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-void);
+    color: var(--color-ice);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: rgb(127 227 255 / 0.3);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(150 200 240 / 0.25) transparent;
+  }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(180deg, rgb(13 23 41 / 0.78), rgb(7 13 25 / 0.82));
+    border: 1px solid var(--color-line);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.04) inset,
+      0 24px 60px -24px rgb(0 0 0 / 0.8);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .eyebrow {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-mist);
+  }
+  .display {
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .scroll-area {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-rise {
+  animation: rise 0.7s var(--ease-cinematic) both;
+}
+.animate-fade {
+  animation: fade 0.5s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

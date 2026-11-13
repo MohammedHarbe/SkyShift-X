@@ -1,0 +1,310 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/comparisons",
+    "body": {
+      "referenceObservationId": "obs-field-a-d2-e1",
+      "targetObservationId": "obs-field-a-d2-e2"
+    }
+  },
+  "status": 200,
+  "response": {
+    "apiVersion": "1.0",
+    "data": {
+      "id": "cmp-field-a-d2-e1-e2",
+      "regionId": "field-a",
+      "bandId": "SPHEREx-D2",
+      "reference": {
+        "id": "obs-field-a-d2-e1",
+        "regionId": "field-a",
+        "epochLabel": "Epoch 1",
+        "observedAt": "2025-05-18T07:42:10Z",
+        "mjd": 60813.32095,
+        "bandId": "SPHEREx-D2",
+        "centralWavelengthUm": 1.32,
+        "bandwidthUm": 0.0322,
+        "center": {
+          "raDeg": 52.5,
+          "decDeg": 18.2,
+          "frame": "ICRS"
+        },
+        "sizeDeg": {
+          "width": 0.25833333333333336,
+          "height": 0.25833333333333336
+        },
+        "pixelScaleArcsec": 6.2,
+        "image": {
+          "url": "mock-data/images/field-a_d2_e1.png",
+          "width": 150,
+          "height": 150,
+          "mediaType": "image/png",
+          "alt": "Simulated Band 2 (1.32 µm) image of Simulated Field A, Epoch 1: a field of point sources on a noisy background."
+        },
+        "display": {
+          "stretch": "asinh",
+          "vmin": 0.2312,
+          "vmax": 1.6912,
+          "unit": "MJy/sr",
+          "colormap": "grayscale"
+        },
+        "wcs": {
+          "projection": "TAN",
+          "crpix": [
+            74.5,
+            74.5
+          ],
+          "crval": [
+            52.5,
+            18.2
+          ],
+          "cdeltDeg": [
+            -0.0017222222222222222,
+            -0.0017222222222222222
+          ],
+          "rotationDeg": 0
+        },
+        "product": {
+          "level": "Simulated Level 2 spectral image cutout",
+          "collection": "simulated",
+          "processingVersion": "sim-v0",
+          "fileName": "level2_2025W20_SIM_0112_D2_spx_sim-v0.fits",
+          "extensions": [
+            "IMAGE",
+            "FLAGS",
+            "VARIANCE",
+            "ZODI",
+            "EPSF",
+            "WCS-WAVE"
+          ]
+        },
+        "quality": {
+          "flaggedPixelFraction": 0.0084,
+          "flagsPresent": [
+            "HOT"
+          ],
+          "notes": "Flag names follow the SPHEREx pixel-flag vocabulary; the flagged pixels themselves are simulated."
+        },
+        "provenance": {
+          "classification": "simulated",
+          "origin": "Synthetic star field rendered by the SkyShift X simulator.",
+          "pipeline": "skyshift-sim 0.1.0",
+          "processingVersion": "sim-v0",
+          "sourceIds": [
+            "src-irsa-cutouts",
+            "src-irsa-sdt"
+          ],
+          "notes": "Synthetic test data that mimics the structure of SPHEREx products. Not a NASA measurement."
+        },
+        "downloads": []
+      },
+      "target": {
+        "id": "obs-field-a-d2-e2",
+        "regionId": "field-a",
+        "epochLabel": "Epoch 2",
+        "observedAt": "2025-05-27T19:15:44Z",
+        "mjd": 60822.80259,
+        "bandId": "SPHEREx-D2",
+        "centralWavelengthUm": 1.35,
+        "bandwidthUm": 0.0329,
+        "center": {
+          "raDeg": 52.5,
+          "decDeg": 18.2,
+          "frame": "ICRS"
+        },
+        "sizeDeg": {
+          "width": 0.25833333333333336,
+          "height": 0.25833333333333336
+        },
+        "pixelScaleArcsec": 6.2,
+        "image": {
+          "url": "mock-data/images/field-a_d2_e2.png",
+          "width": 150,
+          "height": 150,
+          "mediaType": "image/png",
+          "alt": "Simulated Band 2 (1.35 µm) image of Simulated Field A, Epoch 2: a field of point sources on a noisy background."
+        },
+        "display": {
+          "stretch": "asinh",
+          "vmin": 0.2903,
+          "vmax": 1.7503,
+          "unit": "MJy/sr",
+          "colormap": "grayscale"
+        },
+        "wcs": {
+          "projection": "TAN",
+          "crpix": [
+            74.5,
+            74.5
+          ],
+          "crval": [
+            52.5,
+            18.2
+          ],
+          "cdeltDeg": [
+            -0.0017222222222222222,
+            -0.0017222222222222222
+          ],
+          "rotationDeg": 0
+        },
+        "product": {
+          "level": "Simulated Level 2 spectral image cutout",
+          "collection": "simulated",
+          "processingVersion": "sim-v0",
+          "fileName": "level2_2025W22_SIM_0169_D2_spx_sim-v0.fits",
+          "extensions": [
+            "IMAGE",
+            "FLAGS",
+            "VARIANCE",
+            "ZODI",
+            "EPSF",
+            "WCS-WAVE"
+          ]
+        },
+        "quality": {
+          "flaggedPixelFraction": 0.01387,
+          "flagsPresent": [
+            "HOT",
+            "TRANSIENT"
+          ],
+          "notes": "Flag names follow the SPHEREx pixel-flag vocabulary; the flagged pixels themselves are simulated."
+        },
+        "provenance": {
+          "classification": "simulated",
+          "origin": "Synthetic star field rendered by the SkyShift X simulator.",
+          "pipeline": "skyshift-sim 0.1.0",
+          "processingVersion": "sim-v0",
+          "sourceIds": [
+            "src-irsa-cutouts",
+            "src-irsa-sdt"
+          ],
+          "notes": "Synthetic test data that mimics the structure of SPHEREx products. Not a NASA measurement."
+        },
+        "downloads": []
+      },
+      "timeBaselineDays": 9.482,
+      "alignment": {
+        "status": "aligned",
+        "method": "Simulated: images share a pixel grid by construction, with injected sub-pixel jitter",
+        "residualRmsPx": 0.058
+      },
+      "difference": {
+        "image": {
+          "url": "mock-data/images/field-a_d2_diff_e1-e2.png",
+          "width": 150,
+          "height": 150,
+          "mediaType": "image/png",
+          "alt": "Simulated difference image (Epoch 2 minus Epoch 1). Unchanged stars cancel to near black; sources that brightened or appeared are amber, sources that faded or left are blue."
+        },
+        "definition": "target − reference, median level removed",
+        "display": {
+          "stretch": "linear",
+          "vmin": -0.3,
+          "vmax": 0.3,
+          "unit": "MJy/sr",
+          "colormap": "diverging"
+        },
+        "noiseRms": 0.0283,
+        "provenance": {
+          "classification": "simulated",
+          "origin": "Pixel-wise subtraction of two simulated observations.",
+          "pipeline": "skyshift-sim 0.1.0",
+          "processingVersion": "sim-v0",
+          "sourceIds": [
+            "src-irsa-cutouts",
+            "src-irsa-sdt"
+          ],
+          "notes": "Synthetic test data that mimics the structure of SPHEREx products. Not a NASA measurement."
+        }
+      },
+      "markers": [
+        {
+          "candidateId": "cand-a-001",
+          "label": "SSX-A-001",
+          "role": "reference-position",
+          "xPx": 58.4,
+          "yPx": 88.2,
+          "radiusPx": 5,
+          "position": {
+            "raDeg": 52.529188,
+            "decDeg": 18.176406,
+            "frame": "ICRS"
+          }
+        },
+        {
+          "candidateId": "cand-a-001",
+          "label": "SSX-A-001",
+          "role": "target-position",
+          "xPx": 66.3,
+          "yPx": 84.9,
+          "radiusPx": 5,
+          "position": {
+            "raDeg": 52.514866,
+            "decDeg": 18.182089,
+            "frame": "ICRS"
+          }
+        },
+        {
+          "candidateId": "cand-a-002",
+          "label": "SSX-A-002",
+          "role": "reference-position",
+          "xPx": 105.2,
+          "yPx": 40.7,
+          "radiusPx": 5,
+          "position": {
+            "raDeg": 52.444343,
+            "decDeg": 18.258211,
+            "frame": "ICRS"
+          }
+        },
+        {
+          "candidateId": "cand-a-003",
+          "label": "SSX-A-003",
+          "role": "static-position",
+          "xPx": 31.6,
+          "yPx": 119.3,
+          "radiusPx": 5,
+          "position": {
+            "raDeg": 52.577774,
+            "decDeg": 18.122844,
+            "frame": "ICRS"
+          }
+        },
+        {
+          "candidateId": "cand-a-004",
+          "label": "SSX-A-004",
+          "role": "target-position",
+          "xPx": 124,
+          "yPx": 96,
+          "radiusPx": 5,
+          "position": {
+            "raDeg": 52.410261,
+            "decDeg": 18.162972,
+            "frame": "ICRS"
+          }
+        }
+      ],
+      "caveats": [
+        "Simulated data: both images and the difference image are synthetic.",
+        "The two exposures sample slightly different wavelengths (1.32 µm and 1.35 µm). Sources with steep spectra can leave residuals that are not real changes.",
+        "Bright stars leave small paired residuals from sub-pixel alignment error (0.058 px RMS)."
+      ],
+      "provenance": {
+        "classification": "simulated",
+        "origin": "Simulated comparison product.",
+        "pipeline": "skyshift-sim 0.1.0",
+        "processingVersion": "sim-v0",
+        "sourceIds": [
+          "src-irsa-cutouts",
+          "src-irsa-sdt"
+        ],
+        "notes": "Synthetic test data that mimics the structure of SPHEREx products. Not a NASA measurement."
+      }
+    },
+    "meta": {
+      "dataOrigin": "mock",
+      "simulated": true,
+      "generatedAt": "2026-11-13T00:00:00.000Z",
+      "notice": "Demo mode: responses come from the in-app mock API. SIMULATED DATA. Generated by scripts/generate-mock-data.mjs. Not real SPHEREx observations."
+    }
+  }
+}

@@ -1,0 +1,509 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Candidate.schema.json",
+  "title": "Candidate",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "designation": {
+      "type": "string",
+      "description": "Internal label, e.g. \"SSX-A-001\". Not an official designation."
+    },
+    "regionId": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "moving-source",
+        "brightness-change",
+        "single-epoch-detection"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unclassified",
+        "needs-follow-up",
+        "known-object-match",
+        "likely-variable-source",
+        "likely-artifact"
+      ],
+      "description": "Review state. There is deliberately no \"confirmed planet\" value."
+    },
+    "headline": {
+      "type": "string"
+    },
+    "position": {
+      "type": "object",
+      "properties": {
+        "raDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "Right ascension, decimal degrees"
+        },
+        "decDeg": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Declination, decimal degrees"
+        },
+        "frame": {
+          "default": "ICRS",
+          "type": "string",
+          "const": "ICRS"
+        }
+      },
+      "required": [
+        "raDeg",
+        "decDeg",
+        "frame"
+      ],
+      "additionalProperties": false,
+      "description": "Position at first detection"
+    },
+    "detectionCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "firstObservedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "lastObservedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "real-observation",
+        "simulated",
+        "model-derived",
+        "artist-impression",
+        "illustrative-diagram",
+        "procedural-visualization"
+      ]
+    },
+    "detections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "observationId": {
+            "type": "string"
+          },
+          "observedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "detected": {
+            "type": "boolean",
+            "description": "false = looked for and not found at this epoch"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "raDeg": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 360,
+                "description": "Right ascension, decimal degrees"
+              },
+              "decDeg": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Declination, decimal degrees"
+              },
+              "frame": {
+                "default": "ICRS",
+                "type": "string",
+                "const": "ICRS"
+              }
+            },
+            "required": [
+              "raDeg",
+              "decDeg",
+              "frame"
+            ],
+            "additionalProperties": false,
+            "description": "Sky position (ICRS)."
+          },
+          "positionUncertaintyArcsec": {
+            "type": "number",
+            "minimum": 0
+          },
+          "flux": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "uncertainty": {
+                "description": "1-sigma, same unit as value",
+                "type": "number",
+                "minimum": 0
+              },
+              "unit": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "unit"
+            ],
+            "additionalProperties": false,
+            "description": "A number with its unit and, where known, 1-sigma uncertainty."
+          },
+          "wavelengthUm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "snr": {
+            "type": "number"
+          },
+          "flags": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "observationId",
+          "observedAt",
+          "detected",
+          "wavelengthUm",
+          "flags"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "motion": {
+      "description": "Apparent motion as measured by the backend. Omitted for non-moving candidates.",
+      "type": "object",
+      "properties": {
+        "angularSeparation": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "uncertainty": {
+              "description": "1-sigma, same unit as value",
+              "type": "number",
+              "minimum": 0
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false,
+          "description": "A number with its unit and, where known, 1-sigma uncertainty."
+        },
+        "baselineDays": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rate": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "uncertainty": {
+              "description": "1-sigma, same unit as value",
+              "type": "number",
+              "minimum": 0
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false,
+          "description": "Apparent rate on the sky"
+        },
+        "positionAngleDeg": {
+          "type": "number",
+          "description": "Direction of motion, degrees east of north"
+        },
+        "method": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "angularSeparation",
+        "baselineDays",
+        "rate",
+        "positionAngleDeg",
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "explanations": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "assessment": {
+            "type": "string",
+            "enum": [
+              "consistent",
+              "not-ruled-out",
+              "disfavoured",
+              "ruled-out"
+            ],
+            "description": "Qualitative only. The API never carries uncalibrated probabilities."
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "description",
+          "assessment",
+          "rationale",
+          "evidenceIds"
+        ],
+        "additionalProperties": false,
+        "description": "One possible explanation for a candidate and how the evidence bears on it."
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "image",
+              "difference-image",
+              "measurement",
+              "spectrum",
+              "catalog-crossmatch",
+              "literature"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "epistemicStatus": {
+            "type": "string",
+            "enum": [
+              "established",
+              "observed",
+              "model-derived",
+              "hypothesis",
+              "illustrative",
+              "simulated"
+            ],
+            "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+          },
+          "observationIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comparisonId": {
+            "type": "string"
+          },
+          "datasetId": {
+            "type": "string"
+          },
+          "values": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "measurement": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "uncertainty": {
+                      "description": "1-sigma, same unit as value",
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "unit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "unit"
+                  ],
+                  "additionalProperties": false,
+                  "description": "A number with its unit and, where known, 1-sigma uncertainty."
+                }
+              },
+              "required": [
+                "label",
+                "measurement"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sourceIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "summary",
+          "epistemicStatus",
+          "observationIds",
+          "values",
+          "sourceIds"
+        ],
+        "additionalProperties": false,
+        "description": "One inspectable piece of evidence behind a claim or candidate."
+      }
+    },
+    "spectrumDatasetId": {
+      "type": "string"
+    },
+    "followUp": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Observations that would discriminate between explanations"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedJourneyIds": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "real-observation",
+            "simulated",
+            "model-derived",
+            "artist-impression",
+            "illustrative-diagram",
+            "procedural-visualization"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "description": "Plain-language statement of where this came from"
+        },
+        "pipeline": {
+          "description": "Processing pipeline or generator name/version",
+          "type": "string"
+        },
+        "processingVersion": {
+          "type": "string"
+        },
+        "sourceIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "origin",
+        "sourceIds"
+      ],
+      "additionalProperties": false,
+      "description": "Where a product came from and how it must be labelled."
+    }
+  },
+  "required": [
+    "id",
+    "designation",
+    "regionId",
+    "kind",
+    "status",
+    "headline",
+    "position",
+    "detectionCount",
+    "firstObservedAt",
+    "lastObservedAt",
+    "classification",
+    "detections",
+    "explanations",
+    "evidence",
+    "followUp",
+    "limitations",
+    "relatedJourneyIds",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "description": "A source flagged because it changed between observations. A candidate is a question, not a discovery."
+}

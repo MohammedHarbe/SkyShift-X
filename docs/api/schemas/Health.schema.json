@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Health.schema.json",
+  "title": "Health",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "degraded"
+      ]
+    },
+    "service": {
+      "type": "string"
+    },
+    "apiVersion": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "dynamicJourneys": {
+          "type": "boolean",
+          "description": "true when the AI backend can generate journeys on demand"
+        },
+        "liveObservations": {
+          "type": "boolean",
+          "description": "true when observations come from real SPHEREx data"
+        }
+      },
+      "required": [
+        "dynamicJourneys",
+        "liveObservations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "status",
+    "service",
+    "apiVersion",
+    "capabilities"
+  ],
+  "additionalProperties": false
+}

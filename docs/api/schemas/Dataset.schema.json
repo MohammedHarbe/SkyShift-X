@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Dataset.schema.json",
+  "title": "Dataset",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "const": "spectrum"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "target": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "candidateId": {
+              "type": "string"
+            },
+            "position": {
+              "type": "object",
+              "properties": {
+                "raDeg": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 360,
+                  "description": "Right ascension, decimal degrees"
+                },
+                "decDeg": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "description": "Declination, decimal degrees"
+                },
+                "frame": {
+                  "default": "ICRS",
+                  "type": "string",
+                  "const": "ICRS"
+                }
+              },
+              "required": [
+                "raDeg",
+                "decDeg",
+                "frame"
+              ],
+              "additionalProperties": false,
+              "description": "Sky position (ICRS)."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "wavelengthUnit": {
+          "type": "string",
+          "const": "um"
+        },
+        "fluxUnit": {
+          "type": "string",
+          "description": "e.g. \"uJy\""
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "wavelength": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "bandwidth": {
+                "description": "Channel width, same unit as wavelength",
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "flux": {
+                "type": "number"
+              },
+              "fluxUncertainty": {
+                "description": "1-sigma",
+                "type": "number",
+                "minimum": 0
+              },
+              "flagged": {
+                "default": false,
+                "description": "true if the aperture contained flagged pixels",
+                "type": "boolean"
+              },
+              "flags": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "bandId": {
+                "type": "string"
+              },
+              "observedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              }
+            },
+            "required": [
+              "wavelength",
+              "flux",
+              "flagged",
+              "flags"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extraction": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "description": "e.g. \"aperture photometry with annulus background subtraction\""
+            },
+            "apertureRadiusPx": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "backgroundAnnulusPx": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method"
+          ],
+          "additionalProperties": false
+        },
+        "comparisonSeries": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "epistemicStatus": {
+                "type": "string",
+                "enum": [
+                  "established",
+                  "observed",
+                  "model-derived",
+                  "hypothesis",
+                  "illustrative",
+                  "simulated"
+                ],
+                "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+              },
+              "points": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "wavelength": {
+                      "type": "number"
+                    },
+                    "flux": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "wavelength",
+                    "flux"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "description",
+              "epistemicStatus",
+              "points"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "features": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "wavelengthUm": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              },
+              "epistemicStatus": {
+                "type": "string",
+                "enum": [
+                  "established",
+                  "observed",
+                  "model-derived",
+                  "hypothesis",
+                  "illustrative",
+                  "simulated"
+                ],
+                "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "wavelengthUm",
+              "label",
+              "epistemicStatus"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "classification": {
+              "type": "string",
+              "enum": [
+                "real-observation",
+                "simulated",
+                "model-derived",
+                "artist-impression",
+                "illustrative-diagram",
+                "procedural-visualization"
+              ]
+            },
+            "origin": {
+              "type": "string",
+              "description": "Plain-language statement of where this came from"
+            },
+            "pipeline": {
+              "description": "Processing pipeline or generator name/version",
+              "type": "string"
+            },
+            "processingVersion": {
+              "type": "string"
+            },
+            "sourceIds": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "classification",
+            "origin",
+            "sourceIds"
+          ],
+          "additionalProperties": false,
+          "description": "Where a product came from and how it must be labelled."
+        },
+        "downloads": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "fits",
+                  "csv",
+                  "json",
+                  "votable",
+                  "png"
+                ]
+              },
+              "sizeBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "label",
+              "url",
+              "format"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "description",
+        "target",
+        "wavelengthUnit",
+        "fluxUnit",
+        "points",
+        "extraction",
+        "comparisonSeries",
+        "features",
+        "provenance",
+        "downloads"
+      ],
+      "additionalProperties": false,
+      "description": "A spectrum: flux versus wavelength with per-point uncertainty and quality flags."
+    }
+  ]
+}

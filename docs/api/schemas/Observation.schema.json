@@ -1,0 +1,398 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Observation.schema.json",
+  "title": "Observation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "regionId": {
+      "type": "string"
+    },
+    "epochLabel": {
+      "type": "string",
+      "description": "Short human label, e.g. \"Epoch 1\""
+    },
+    "observedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "description": "Start of exposure, UTC (IRSA time_bounds_lower)"
+    },
+    "mjd": {
+      "type": "number",
+      "description": "Modified Julian Date of observedAt"
+    },
+    "bandId": {
+      "type": "string"
+    },
+    "centralWavelengthUm": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Wavelength at the cutout centre"
+    },
+    "bandwidthUm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "center": {
+      "type": "object",
+      "properties": {
+        "raDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "Right ascension, decimal degrees"
+        },
+        "decDeg": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Declination, decimal degrees"
+        },
+        "frame": {
+          "default": "ICRS",
+          "type": "string",
+          "const": "ICRS"
+        }
+      },
+      "required": [
+        "raDeg",
+        "decDeg",
+        "frame"
+      ],
+      "additionalProperties": false,
+      "description": "Sky position (ICRS)."
+    },
+    "sizeDeg": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "pixelScaleArcsec": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Absolute URL, or a path relative to the API base URL"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": [
+            "image/png",
+            "image/jpeg",
+            "image/webp"
+          ]
+        },
+        "alt": {
+          "type": "string",
+          "description": "Text alternative describing the image"
+        }
+      },
+      "required": [
+        "url",
+        "width",
+        "height",
+        "mediaType",
+        "alt"
+      ],
+      "additionalProperties": false,
+      "description": "Browser-displayable preview image (the backend renders FITS to PNG)."
+    },
+    "display": {
+      "type": "object",
+      "properties": {
+        "stretch": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "asinh",
+            "log"
+          ]
+        },
+        "vmin": {
+          "type": "number"
+        },
+        "vmax": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of the underlying pixel values, e.g. \"MJy/sr\""
+        },
+        "colormap": {
+          "default": "grayscale",
+          "type": "string",
+          "enum": [
+            "grayscale",
+            "diverging"
+          ]
+        }
+      },
+      "required": [
+        "stretch",
+        "vmin",
+        "vmax",
+        "unit",
+        "colormap"
+      ],
+      "additionalProperties": false,
+      "description": "How the backend mapped pixel values to the preview image, so the UI can draw a faithful scale bar."
+    },
+    "wcs": {
+      "type": "object",
+      "properties": {
+        "projection": {
+          "type": "string",
+          "const": "TAN"
+        },
+        "crpix": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Reference pixel (x, y), 0-based, pixel centres"
+        },
+        "crval": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "RA, Dec at the reference pixel (deg)"
+        },
+        "cdeltDeg": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Degrees per pixel along x (negative = east left) and y"
+        },
+        "rotationDeg": {
+          "default": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "projection",
+        "crpix",
+        "crval",
+        "cdeltDeg",
+        "rotationDeg"
+      ],
+      "additionalProperties": false,
+      "description": "Simplified WCS of the PREVIEW image, sufficient for a cursor read-out over small cutouts. Authoritative astrometry stays in the FITS file."
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "description": "e.g. \"Level 2 spectral image cutout\""
+        },
+        "collection": {
+          "type": "string",
+          "description": "IRSA collection, e.g. \"spherex_dr1\"; \"simulated\" for mock data"
+        },
+        "processingVersion": {
+          "type": "string",
+          "description": "FITS primary-header VERSION"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "HDUs available, e.g. IMAGE, FLAGS, VARIANCE, ZODI, EPSF, WCS-WAVE"
+        }
+      },
+      "required": [
+        "level",
+        "collection",
+        "processingVersion",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "flaggedPixelFraction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "flagsPresent": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "flaggedPixelFraction",
+        "flagsPresent"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "real-observation",
+            "simulated",
+            "model-derived",
+            "artist-impression",
+            "illustrative-diagram",
+            "procedural-visualization"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "description": "Plain-language statement of where this came from"
+        },
+        "pipeline": {
+          "description": "Processing pipeline or generator name/version",
+          "type": "string"
+        },
+        "processingVersion": {
+          "type": "string"
+        },
+        "sourceIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "origin",
+        "sourceIds"
+      ],
+      "additionalProperties": false,
+      "description": "Where a product came from and how it must be labelled."
+    },
+    "downloads": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "fits",
+              "csv",
+              "json",
+              "votable",
+              "png"
+            ]
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "label",
+          "url",
+          "format"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "id",
+    "regionId",
+    "epochLabel",
+    "observedAt",
+    "mjd",
+    "bandId",
+    "centralWavelengthUm",
+    "bandwidthUm",
+    "center",
+    "sizeDeg",
+    "pixelScaleArcsec",
+    "image",
+    "display",
+    "wcs",
+    "product",
+    "quality",
+    "provenance",
+    "downloads"
+  ],
+  "additionalProperties": false,
+  "description": "One image of a region at one time and wavelength (a spectral-image cutout)."
+}

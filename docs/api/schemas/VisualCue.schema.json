@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/VisualCue.schema.json",
+  "title": "VisualCue",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "camera3d"
+        },
+        "targetObjectId": {
+          "type": "string"
+        },
+        "framing": {
+          "type": "string",
+          "enum": [
+            "close",
+            "medium",
+            "wide",
+            "overview"
+          ]
+        },
+        "transition": {
+          "default": "travel",
+          "type": "string",
+          "enum": [
+            "travel",
+            "cut"
+          ]
+        },
+        "highlightObjectIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "targetObjectId",
+        "framing",
+        "transition",
+        "highlightObjectIds"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "image"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "observation"
+                },
+                "observationId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "observationId"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "asset"
+                },
+                "assetId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "assetId"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "source",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "imageComparison"
+        },
+        "comparisonId": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "side-by-side",
+            "blink",
+            "difference"
+          ]
+        },
+        "showMarkers": {
+          "default": false,
+          "type": "boolean"
+        },
+        "focusCandidateId": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "comparisonId",
+        "mode",
+        "showMarkers",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "spectrum"
+        },
+        "datasetId": {
+          "type": "string"
+        },
+        "showComparison": {
+          "default": false,
+          "type": "boolean"
+        },
+        "highlightRangeUm": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "datasetId",
+        "showComparison",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "skyMap"
+        },
+        "regionIds": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "highlightRegionId": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "regionIds",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "diagram"
+        },
+        "diagramId": {
+          "type": "string",
+          "enum": [
+            "apparent-motion",
+            "difference-imaging",
+            "spectral-scan"
+          ],
+          "description": "Key into the frontend diagram library. Unknown ids are rejected, never executed."
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "diagramId",
+        "caption"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "candidate"
+        },
+        "candidateId": {
+          "type": "string"
+        },
+        "focus": {
+          "default": "summary",
+          "type": "string",
+          "enum": [
+            "summary",
+            "explanations",
+            "evidence"
+          ]
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "candidateId",
+        "focus"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "conclusion"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "points": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "epistemicStatus": {
+                "type": "string",
+                "enum": [
+                  "established",
+                  "observed",
+                  "model-derived",
+                  "hypothesis",
+                  "illustrative",
+                  "simulated"
+                ],
+                "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+              }
+            },
+            "required": [
+              "text",
+              "epistemicStatus"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "nextSteps": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "headline",
+        "points",
+        "nextSteps"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "description": "What is on screen during a narration segment. A closed, validated set — no generated code."
+}

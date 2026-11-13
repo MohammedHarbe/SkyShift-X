@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/SkyRegion.schema.json",
+  "title": "SkyRegion",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "center": {
+      "type": "object",
+      "properties": {
+        "raDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "Right ascension, decimal degrees"
+        },
+        "decDeg": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Declination, decimal degrees"
+        },
+        "frame": {
+          "default": "ICRS",
+          "type": "string",
+          "const": "ICRS"
+        }
+      },
+      "required": [
+        "raDeg",
+        "decDeg",
+        "frame"
+      ],
+      "additionalProperties": false,
+      "description": "Sky position (ICRS)."
+    },
+    "sizeDeg": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "bands": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "IRSA energy_bandpassname, e.g. \"SPHEREx-D2\""
+          },
+          "label": {
+            "type": "string"
+          },
+          "wavelengthMinUm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "wavelengthMaxUm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "resolvingPower": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "wavelengthMinUm",
+          "wavelengthMaxUm"
+        ],
+        "additionalProperties": false,
+        "description": "A SPHEREx detector band (six detectors cover 0.75–5.0 µm)."
+      }
+    },
+    "observationCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "epochRange": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "candidateCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "real-observation",
+            "simulated",
+            "model-derived",
+            "artist-impression",
+            "illustrative-diagram",
+            "procedural-visualization"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "description": "Plain-language statement of where this came from"
+        },
+        "pipeline": {
+          "description": "Processing pipeline or generator name/version",
+          "type": "string"
+        },
+        "processingVersion": {
+          "type": "string"
+        },
+        "sourceIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "origin",
+        "sourceIds"
+      ],
+      "additionalProperties": false,
+      "description": "Where a product came from and how it must be labelled."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "center",
+    "sizeDeg",
+    "bands",
+    "observationCount",
+    "epochRange",
+    "candidateCount",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "description": "A patch of sky for which the backend has time-resolved observations."
+}

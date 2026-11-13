@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Source.schema.json",
+  "title": "Source",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "paper",
+        "archive",
+        "documentation",
+        "tutorial",
+        "mission-page",
+        "challenge"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "string"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "publisher",
+    "url"
+  ],
+  "additionalProperties": false,
+  "description": "A citable source. Never fabricated: every entry must resolve to a real document."
+}

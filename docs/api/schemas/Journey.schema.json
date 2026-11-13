@@ -1,0 +1,839 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/Journey.schema.json",
+  "title": "Journey",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "estimatedMinutes": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "sceneCount": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generation": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "prepared",
+            "generated"
+          ],
+          "description": "prepared = hand-written demo script; generated = AI backend"
+        },
+        "model": {
+          "type": "string"
+        },
+        "disclosure": {
+          "type": "string",
+          "description": "Shown to the user, e.g. \"Prepared demo journey — not AI-generated.\""
+        }
+      },
+      "required": [
+        "mode",
+        "disclosure"
+      ],
+      "additionalProperties": false,
+      "description": "Honest statement of how this journey was produced."
+    },
+    "context": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "string"
+        },
+        "comparisonId": {
+          "type": "string"
+        },
+        "candidateId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "description": "What the user was looking at when they asked."
+    },
+    "scenes": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "segments": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "narration": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Text spoken (and shown as captions) while this visual is on screen"
+                },
+                "visual": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "camera3d"
+                        },
+                        "targetObjectId": {
+                          "type": "string"
+                        },
+                        "framing": {
+                          "type": "string",
+                          "enum": [
+                            "close",
+                            "medium",
+                            "wide",
+                            "overview"
+                          ]
+                        },
+                        "transition": {
+                          "default": "travel",
+                          "type": "string",
+                          "enum": [
+                            "travel",
+                            "cut"
+                          ]
+                        },
+                        "highlightObjectIds": {
+                          "default": [],
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "targetObjectId",
+                        "framing",
+                        "transition",
+                        "highlightObjectIds"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "image"
+                        },
+                        "source": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "observation"
+                                },
+                                "observationId": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "observationId"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "asset"
+                                },
+                                "assetId": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "source",
+                        "caption"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "imageComparison"
+                        },
+                        "comparisonId": {
+                          "type": "string"
+                        },
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "side-by-side",
+                            "blink",
+                            "difference"
+                          ]
+                        },
+                        "showMarkers": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "focusCandidateId": {
+                          "type": "string"
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "comparisonId",
+                        "mode",
+                        "showMarkers",
+                        "caption"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "spectrum"
+                        },
+                        "datasetId": {
+                          "type": "string"
+                        },
+                        "showComparison": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "highlightRangeUm": {
+                          "type": "array",
+                          "prefixItems": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "number"
+                            }
+                          ],
+                          "items": false,
+                          "minItems": 2,
+                          "maxItems": 2
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "datasetId",
+                        "showComparison",
+                        "caption"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "skyMap"
+                        },
+                        "regionIds": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "highlightRegionId": {
+                          "type": "string"
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "regionIds",
+                        "caption"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "diagram"
+                        },
+                        "diagramId": {
+                          "type": "string",
+                          "enum": [
+                            "apparent-motion",
+                            "difference-imaging",
+                            "spectral-scan"
+                          ],
+                          "description": "Key into the frontend diagram library. Unknown ids are rejected, never executed."
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "diagramId",
+                        "caption"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "candidate"
+                        },
+                        "candidateId": {
+                          "type": "string"
+                        },
+                        "focus": {
+                          "default": "summary",
+                          "type": "string",
+                          "enum": [
+                            "summary",
+                            "explanations",
+                            "evidence"
+                          ]
+                        },
+                        "caption": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "candidateId",
+                        "focus"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "conclusion"
+                        },
+                        "headline": {
+                          "type": "string"
+                        },
+                        "points": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string"
+                              },
+                              "epistemicStatus": {
+                                "type": "string",
+                                "enum": [
+                                  "established",
+                                  "observed",
+                                  "model-derived",
+                                  "hypothesis",
+                                  "illustrative",
+                                  "simulated"
+                                ],
+                                "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "epistemicStatus"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "nextSteps": {
+                          "default": [],
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "headline",
+                        "points",
+                        "nextSteps"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ],
+                  "description": "What is on screen during a narration segment. A closed, validated set — no generated code."
+                },
+                "audio": {
+                  "description": "Optional pre-rendered narration (premium TTS). When absent the client synthesises speech.",
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "mediaType": {
+                      "type": "string"
+                    },
+                    "durationMs": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "captions": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "text": {
+                            "type": "string"
+                          },
+                          "startMs": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "endMs": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "text",
+                          "startMs",
+                          "endMs"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "mediaType",
+                    "durationMs",
+                    "captions"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "id",
+                "narration",
+                "visual"
+              ],
+              "additionalProperties": false,
+              "description": "The unit of synchronisation: one visual + the narration that plays over it."
+            }
+          },
+          "claims": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "epistemicStatus": {
+                  "type": "string",
+                  "enum": [
+                    "established",
+                    "observed",
+                    "model-derived",
+                    "hypothesis",
+                    "illustrative",
+                    "simulated"
+                  ],
+                  "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+                },
+                "evidenceIds": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "sourceIds": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "text",
+                "epistemicStatus",
+                "evidenceIds",
+                "sourceIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "limitations": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "segments",
+          "claims",
+          "limitations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "image",
+              "difference-image",
+              "measurement",
+              "spectrum",
+              "catalog-crossmatch",
+              "literature"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "epistemicStatus": {
+            "type": "string",
+            "enum": [
+              "established",
+              "observed",
+              "model-derived",
+              "hypothesis",
+              "illustrative",
+              "simulated"
+            ],
+            "description": "established = accepted science; observed = real measurement; model-derived = output of a model or pipeline; hypothesis = proposed, unconfirmed; illustrative = teaching visual, not data; simulated = synthetic data."
+          },
+          "observationIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comparisonId": {
+            "type": "string"
+          },
+          "datasetId": {
+            "type": "string"
+          },
+          "values": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "measurement": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "uncertainty": {
+                      "description": "1-sigma, same unit as value",
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "unit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "unit"
+                  ],
+                  "additionalProperties": false,
+                  "description": "A number with its unit and, where known, 1-sigma uncertainty."
+                }
+              },
+              "required": [
+                "label",
+                "measurement"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sourceIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "summary",
+          "epistemicStatus",
+          "observationIds",
+          "values",
+          "sourceIds"
+        ],
+        "additionalProperties": false,
+        "description": "One inspectable piece of evidence behind a claim or candidate."
+      }
+    },
+    "sources": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "paper",
+              "archive",
+              "documentation",
+              "tutorial",
+              "mission-page",
+              "challenge"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "publisher",
+          "url"
+        ],
+        "additionalProperties": false,
+        "description": "A citable source. Never fabricated: every entry must resolve to a real document."
+      }
+    },
+    "assets": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "real-observation",
+              "simulated",
+              "model-derived",
+              "artist-impression",
+              "illustrative-diagram",
+              "procedural-visualization"
+            ]
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Absolute URL, or a path relative to the API base URL"
+              },
+              "width": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "height": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "mediaType": {
+                "type": "string",
+                "enum": [
+                  "image/png",
+                  "image/jpeg",
+                  "image/webp"
+                ]
+              },
+              "alt": {
+                "type": "string",
+                "description": "Text alternative describing the image"
+              }
+            },
+            "required": [
+              "url",
+              "width",
+              "height",
+              "mediaType",
+              "alt"
+            ],
+            "additionalProperties": false,
+            "description": "Browser-displayable preview image (the backend renders FITS to PNG)."
+          },
+          "credit": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "usageTerms": {
+            "type": "string"
+          },
+          "observation": {
+            "type": "object",
+            "properties": {
+              "instrument": {
+                "type": "string"
+              },
+              "wavelength": {
+                "type": "string"
+              },
+              "observedAt": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "classification",
+          "image",
+          "credit",
+          "usageTerms"
+        ],
+        "additionalProperties": false,
+        "description": "Entry of the asset manifest: every image carries credit, terms and classification."
+      }
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "subtitle",
+    "estimatedMinutes",
+    "sceneCount",
+    "tags",
+    "generation",
+    "context",
+    "scenes",
+    "evidence",
+    "sources",
+    "assets"
+  ],
+  "additionalProperties": false,
+  "description": "A self-describing narrated story: ordered scenes with claims, evidence and sources."
+}

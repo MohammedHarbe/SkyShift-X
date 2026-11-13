@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/JourneySummary.schema.json",
+  "title": "JourneySummary",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "estimatedMinutes": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "sceneCount": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generation": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "prepared",
+            "generated"
+          ],
+          "description": "prepared = hand-written demo script; generated = AI backend"
+        },
+        "model": {
+          "type": "string"
+        },
+        "disclosure": {
+          "type": "string",
+          "description": "Shown to the user, e.g. \"Prepared demo journey — not AI-generated.\""
+        }
+      },
+      "required": [
+        "mode",
+        "disclosure"
+      ],
+      "additionalProperties": false,
+      "description": "Honest statement of how this journey was produced."
+    },
+    "context": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "string"
+        },
+        "comparisonId": {
+          "type": "string"
+        },
+        "candidateId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "description": "What the user was looking at when they asked."
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "subtitle",
+    "estimatedMinutes",
+    "sceneCount",
+    "tags",
+    "generation",
+    "context"
+  ],
+  "additionalProperties": false
+}

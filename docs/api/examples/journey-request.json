@@ -1,0 +1,324 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/journeys",
+    "body": {
+      "question": "Why does this source appear to move?",
+      "context": {
+        "regionId": "field-a",
+        "comparisonId": "cmp-field-a-d2-e1-e2",
+        "candidateId": "cand-a-001"
+      },
+      "audience": "beginner"
+    }
+  },
+  "status": 200,
+  "response": {
+    "apiVersion": "1.0",
+    "data": {
+      "id": "journey-moving-source",
+      "title": "Why Did This Source Move?",
+      "subtitle": "From two images of the same sky to a careful scientific question",
+      "estimatedMinutes": 4,
+      "sceneCount": 9,
+      "tags": [
+        "time-domain",
+        "moving objects",
+        "SPHEREx",
+        "Planet Nine hypothesis"
+      ],
+      "generation": {
+        "mode": "prepared",
+        "disclosure": "Prepared demonstration journey, written by the SkyShift X team. It is not AI-generated, and the observations it shows are simulated."
+      },
+      "context": {
+        "regionId": "field-a",
+        "comparisonId": "cmp-field-a-d2-e1-e2",
+        "candidateId": "cand-a-001"
+      },
+      "scenes": [
+        {
+          "id": "sc-1",
+          "title": "The sky is not still",
+          "segments": [
+            {
+              "id": "sc-1-a",
+              "narration": "Every planet, moon and asteroid in our solar system is moving. Seen from Earth, they drift slowly against the far more distant stars.",
+              "visual": {
+                "type": "camera3d",
+                "targetObjectId": "sun",
+                "framing": "overview",
+                "transition": "travel",
+                "highlightObjectIds": [],
+                "caption": "The solar system, not to scale"
+              }
+            },
+            {
+              "id": "sc-1-b",
+              "narration": "Neptune, the most distant known planet, takes about one hundred and sixty-five years to circle the Sun. It was first seen in 1846, at a position predicted from small irregularities in the motion of Uranus.",
+              "visual": {
+                "type": "camera3d",
+                "targetObjectId": "neptune",
+                "framing": "medium",
+                "transition": "travel",
+                "highlightObjectIds": [],
+                "caption": "Neptune"
+              }
+            }
+          ],
+          "claims": [
+            {
+              "id": "cl-1-1",
+              "text": "Solar-system bodies move relative to the background stars as seen from Earth.",
+              "epistemicStatus": "established",
+              "evidenceIds": [],
+              "sourceIds": []
+            },
+            {
+              "id": "cl-1-2",
+              "text": "Neptune orbits the Sun about once every 165 years.",
+              "epistemicStatus": "established",
+              "evidenceIds": [],
+              "sourceIds": [
+                "src-jpl-planets"
+              ]
+            },
+            {
+              "id": "cl-1-3",
+              "text": "Neptune was first observed in 1846 at a position predicted from the motion of Uranus.",
+              "epistemicStatus": "established",
+              "evidenceIds": [],
+              "sourceIds": [
+                "src-nasa-neptune"
+              ]
+            }
+          ],
+          "limitations": [
+            "The 3D view compresses distances and exaggerates sizes. Positions along orbits are illustrative."
+          ]
+        },
+        {
+          "id": "sc-4",
+          "title": "Two looks at the same sky",
+          "segments": [
+            {
+              "id": "sc-4-a",
+              "narration": "Here are two simulated, SPHEREx-style images of one small field, taken nine days apart. They are synthetic test data, not real observations. At first glance they look identical.",
+              "visual": {
+                "type": "imageComparison",
+                "comparisonId": "cmp-field-a-d2-e1-e2",
+                "mode": "side-by-side",
+                "showMarkers": false,
+                "caption": "Simulated observations, 9.5 days apart, Band 2 (about 1.3 µm)"
+              }
+            },
+            {
+              "id": "sc-4-b",
+              "narration": "Blinking between them makes changes easier to spot. Most points stay put. A few do not.",
+              "visual": {
+                "type": "imageComparison",
+                "comparisonId": "cmp-field-a-d2-e1-e2",
+                "mode": "blink",
+                "showMarkers": false,
+                "caption": "Blink comparison of the two simulated epochs"
+              }
+            }
+          ],
+          "claims": [
+            {
+              "id": "cl-4-1",
+              "text": "The two images shown are simulated.",
+              "epistemicStatus": "simulated",
+              "evidenceIds": [
+                "ev-a-001-diff"
+              ],
+              "sourceIds": []
+            },
+            {
+              "id": "cl-4-2",
+              "text": "Blinking two aligned images is a long-established way to find moving objects; Pluto was found this way in 1930.",
+              "epistemicStatus": "established",
+              "evidenceIds": [],
+              "sourceIds": []
+            }
+          ],
+          "limitations": [
+            "Real SPHEREx exposures of the same position differ in wavelength; a real comparison must account for that."
+          ]
+        },
+        {
+          "id": "sc-5",
+          "title": "Subtracting the sky",
+          "segments": [
+            {
+              "id": "sc-5-a",
+              "narration": "To find changes systematically, we subtract the earlier image from the later one. Anything that stayed the same cancels out.",
+              "visual": {
+                "type": "diagram",
+                "diagramId": "difference-imaging",
+                "caption": "Later image minus earlier image leaves only what changed."
+              }
+            },
+            {
+              "id": "sc-5-b",
+              "narration": "What remains are the differences. A source that moved leaves a pair of marks: blue where it was, amber where it is now. This simulated candidate shows exactly that pattern.",
+              "visual": {
+                "type": "imageComparison",
+                "comparisonId": "cmp-field-a-d2-e1-e2",
+                "mode": "difference",
+                "showMarkers": true,
+                "focusCandidateId": "cand-a-001",
+                "caption": "Simulated difference image with candidate positions marked"
+              }
+            }
+          ],
+          "claims": [
+            {
+              "id": "cl-5-1",
+              "text": "Image subtraction is a standard way to isolate sources that changed between exposures.",
+              "epistemicStatus": "established",
+              "evidenceIds": [],
+              "sourceIds": [
+                "src-irsa-sdt"
+              ]
+            },
+            {
+              "id": "cl-5-2",
+              "text": "The candidate leaves a paired negative and positive residual 53 arcseconds apart.",
+              "epistemicStatus": "simulated",
+              "evidenceIds": [
+                "ev-a-001-diff",
+                "ev-a-001-motion"
+              ],
+              "sourceIds": []
+            }
+          ],
+          "limitations": [
+            "Bright stars leave small residual pairs from imperfect alignment; these are not moving objects."
+          ]
+        },
+        {
+          "id": "sc-9",
+          "title": "What we can and cannot say",
+          "segments": [
+            {
+              "id": "sc-9-a",
+              "narration": "So, why did this source move? Most likely because it belongs to our solar system. What it is remains an open question. Answering it would take more positions over many months to fit an orbit, and confirmation from another telescope.",
+              "visual": {
+                "type": "conclusion",
+                "headline": "A candidate is a question, not a discovery",
+                "points": [
+                  {
+                    "text": "The source changed position between observations.",
+                    "epistemicStatus": "simulated"
+                  },
+                  {
+                    "text": "Apparent motion against the stars points to an object inside the solar system.",
+                    "epistemicStatus": "established"
+                  },
+                  {
+                    "text": "Its identity is undetermined: three positions cannot define an orbit.",
+                    "epistemicStatus": "simulated"
+                  },
+                  {
+                    "text": "Planet Nine remains an unconfirmed hypothesis. This synthetic candidate is not evidence for it.",
+                    "epistemicStatus": "hypothesis"
+                  }
+                ],
+                "nextSteps": [
+                  "Gather more epochs and fit an orbit.",
+                  "Cross-match against catalogues of known solar-system objects.",
+                  "Seek independent confirmation with another telescope."
+                ]
+              }
+            }
+          ],
+          "claims": [],
+          "limitations": [
+            "Everything measured in this journey comes from simulated data."
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "ev-a-001-diff",
+          "kind": "difference-image",
+          "title": "Paired residual in the difference image",
+          "summary": "Epoch 2 minus Epoch 1 shows a negative (blue) residual at the earlier position and a positive (amber) residual 53 arcseconds away.",
+          "epistemicStatus": "simulated",
+          "observationIds": [
+            "obs-field-a-d2-e1",
+            "obs-field-a-d2-e2"
+          ],
+          "comparisonId": "cmp-field-a-d2-e1-e2",
+          "values": [],
+          "sourceIds": []
+        },
+        {
+          "id": "ev-a-001-motion",
+          "kind": "measurement",
+          "title": "Apparent motion between Epoch 1 and Epoch 2",
+          "summary": "Positions measured by the (simulated) backend in the aligned frame.",
+          "epistemicStatus": "simulated",
+          "observationIds": [
+            "obs-field-a-d2-e1",
+            "obs-field-a-d2-e2"
+          ],
+          "values": [
+            {
+              "label": "Angular separation",
+              "measurement": {
+                "value": 53.1,
+                "uncertainty": 2,
+                "unit": "arcsec"
+              }
+            },
+            {
+              "label": "Time baseline",
+              "measurement": {
+                "value": 9.48,
+                "unit": "days"
+              }
+            },
+            {
+              "label": "Apparent rate",
+              "measurement": {
+                "value": 0.233,
+                "uncertainty": 0.009,
+                "unit": "arcsec/hour"
+              }
+            }
+          ],
+          "sourceIds": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "src-irsa-spherex",
+          "kind": "archive",
+          "title": "SPHEREx: An All-Sky Spectral Survey (mission archive page)",
+          "publisher": "NASA/IPAC Infrared Science Archive (IRSA)",
+          "url": "https://irsa.ipac.caltech.edu/Missions/spherex.html",
+          "note": "Source for wavelength coverage, detector bands, resolving power and data releases."
+        },
+        {
+          "id": "src-irsa-cutouts",
+          "kind": "tutorial",
+          "title": "Download a collection of SPHEREx Spectral Image cutouts as a multi-extension FITS file",
+          "authors": "V. Desai, J. Krick, A. Faisst, T. Raen, B. Sipőcz",
+          "publisher": "Caltech/IPAC-IRSA",
+          "year": 2026,
+          "url": "https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/",
+          "note": "Source for cutout structure, FITS extensions, observation timestamps and per-position wavelength."
+        }
+      ],
+      "assets": []
+    },
+    "meta": {
+      "dataOrigin": "mock",
+      "simulated": true,
+      "generatedAt": "2026-11-13T00:00:00.000Z",
+      "notice": "Demo mode: responses come from the in-app mock API. SIMULATED DATA. Generated by scripts/generate-mock-data.mjs. Not real SPHEREx observations."
+    }
+  }
+}

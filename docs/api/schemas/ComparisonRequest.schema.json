@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/ComparisonRequest.schema.json",
+  "title": "ComparisonRequest",
+  "type": "object",
+  "properties": {
+    "referenceObservationId": {
+      "type": "string"
+    },
+    "targetObservationId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "referenceObservationId",
+    "targetObservationId"
+  ],
+  "description": "Ask the backend to align two observations and compute target − reference."
+}

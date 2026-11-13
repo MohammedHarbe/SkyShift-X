@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skyshift-x/api/v1/JourneyRequest.schema.json",
+  "title": "JourneyRequest",
+  "type": "object",
+  "properties": {
+    "question": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "context": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "string"
+        },
+        "comparisonId": {
+          "type": "string"
+        },
+        "candidateId": {
+          "type": "string"
+        }
+      },
+      "description": "What the user was looking at when they asked."
+    },
+    "audience": {
+      "default": "beginner",
+      "type": "string",
+      "enum": [
+        "beginner",
+        "research"
+      ]
+    }
+  },
+  "required": [
+    "question"
+  ],
+  "description": "Ask for a narrated journey answering a question in context."
+}
